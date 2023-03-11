@@ -17493,6 +17493,27 @@ const data = [
   },
 ];
 
+// Route GET pour récupérer la liste des personnes d'un mois donné
+app.get("/:month", (req, res) => {
+  const month = req.params.month;
+  let persons = [];
+
+  // On recherche le mois demandé dans les données
+  const monthData = data.find(
+    (m) => m.month.toLowerCase() === month.toLowerCase()
+  );
+  if (!monthData) {
+    return res.status(404).send("Mois introuvable");
+  } else {
+    // On recherche le jour demandé dans les données du mois
+    // const dayData = monthData.days.find((d) => d[day]);
+    persons = monthData.days;
+  }
+
+  // On renvoie la liste des personnes trouvées
+  res.send(persons);
+});
+
 // Route GET pour récupérer la liste des personnes d'un jour donné dans un mois donné
 app.get("/:month/:day", (req, res) => {
   const month = req.params.month;
@@ -17523,4 +17544,5 @@ app.get("/:month/:day", (req, res) => {
 
 app.listen(port, () => console.log(`API en écoute sur le port ${port}`));
 
-// http://localhost:3000/january/day29
+// http://localhost:3000/janvier/29
+// http://localhost:3000/fevrier
